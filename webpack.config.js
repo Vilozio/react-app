@@ -9,7 +9,7 @@ module.exports = {
     // Turns debugging on
     devtool: 'eval',
     devServer: { hot: true },
-    entry: ['./src/index.jsx'],
+    entry: ['./src/index.js'],
     output: {
         path: __dirname + '/dist',
         filename: './bundle.js'
@@ -23,7 +23,7 @@ module.exports = {
             loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
           },
           {
-            test: /\.jsx$/,
+            test: /\.(js|jsx)$/,
             loader: 'babel'
           }
         ]
@@ -35,5 +35,8 @@ module.exports = {
         }),
         new webpack.HotModuleReplacementPlugin(),
         devFlagPlugin
-    ]
+    ],
+    resolve: {
+        extensions: ['', '.js', '.jsx']
+    }
 };
