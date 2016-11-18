@@ -1,6 +1,9 @@
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+var devFlagPlugin = new webpack.DefinePlugin({
+  __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
+});
 
 module.exports = {
     // Turns debugging on
@@ -8,7 +11,7 @@ module.exports = {
     devServer: { hot: true },
     entry: ['./src/index.jsx'],
     output: {
-        path: __dirname + '/target',
+        path: __dirname + '/dist',
         filename: './bundle.js'
     },
     module: {
@@ -30,6 +33,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './src/index.html'
         }),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        devFlagPlugin
     ]
 };

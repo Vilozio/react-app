@@ -1,9 +1,8 @@
-# Intellij Idea
+# IDEs
 .idea/
 
-# NPM
+# NPM dependencies
 node_modules/
 
-# output
-target/
-deploy/
+# Output
+dist/
