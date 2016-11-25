@@ -1,14 +1,11 @@
 const webpack = require('webpack');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpackValidator = require('webpack-validator')
 const { getIfUtils, removeEmpty } = require('webpack-config-utils')
-var devFlagPlugin = new webpack.DefinePlugin({
-  __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
-});
 
 module.exports = env => {
-    console.log(env)
     const { ifProd, ifNotProd } = getIfUtils(env)
     const config = webpackValidator({
         devtool: ifProd('source-map', 'eval'),
@@ -32,12 +29,18 @@ module.exports = env => {
             ]
         },
         plugins: [
+            new ProgressBarPlugin(),
             new ExtractTextPlugin('styles.css'),
             new HtmlWebpackPlugin({
                 template: './src/index.html'
             }),
             new webpack.HotModuleReplacementPlugin(),
-            devFlagPlugin
+            new webpack.DefinePlugin({
+                __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false')),
+                'process.env': {
+                    NODE_ENV: ifProd('"production"', '"development"')
+                }
+            })
         ],
         resolve: {
             extensions: ['.js', '.jsx']
