@@ -4,12 +4,15 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import todoApp from './reducers'
 import App from './components/App'
+import Background from './components/Background'
 
 let store = createStore(todoApp)
 
 render(
   <Provider store={store}>
-    <App />
+    <Background>
+      <App />
+    </Background>
   </Provider>,
   document.getElementById('root')
 )
