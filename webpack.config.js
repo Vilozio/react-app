@@ -13,7 +13,7 @@ module.exports = env => {
     entry: ['./src/index.js'],
     output: {
       path: __dirname + '/dist',
-      filename: 'bundle.js',
+      filename: 'js/bundle.js',
       // publicPath: __dirname + '/dist/'
     },
     module: {
@@ -25,11 +25,16 @@ module.exports = env => {
         },
         {
           test: /\.(js|jsx)$/,
-          loaders: ['babel-loader'], exclude: /node_modules/
+          exclude: /node_modules/,
+          loader: 'babel-loader',
+          query:
+          {
+            'presets': ['es2015', 'react', 'stage-0']
+          }
         },
         {
           test: /\.(jpe?g|png|gif|svg)$/i,
-          loader: 'file-loader?name=public/icons/[name].[ext]'
+          loader: 'url-loader?limit=10000&name=public/assets/images/[name].[ext]'
         }
       ]
     },

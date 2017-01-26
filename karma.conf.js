@@ -2,15 +2,22 @@ const webpackEnv = {test: true}
 const webpackConfig = require('./webpack.config')(webpackEnv)
 process.env.BABEL_ENV = 'test'
 const testGlob = 'test/**/*.test.js'
-// const srcGlob = 'src/**/*.js'
+const srcGlob = 'src/**/*.js'
+const srcWithDOM = 'src/index.js'
 
 module.exports = function(config) {
   config.set({
     basePath: '',
     frameworks: ['mocha', 'chai'],
-    files: [testGlob],
+    files: [
+      srcGlob,
+      testGlob
+    ],
+    exclude: [
+      srcWithDOM
+    ],
     preprocessors: {
-            // [srcGlob]: ['webpack'],
+      [srcGlob]: ['webpack'],
       [testGlob]: ['webpack']
     },
     webpack: webpackConfig,
