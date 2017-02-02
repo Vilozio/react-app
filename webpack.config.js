@@ -1,3 +1,4 @@
+const path = require('path')
 const webpack = require('webpack')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -12,16 +13,15 @@ module.exports = env => {
     devServer: {hot: true},
     entry: ['./src/index.js'],
     output: {
-      path: __dirname + '/dist',
-      filename: 'js/bundle.js',
-      // publicPath: __dirname + '/dist/'
+      path: path.join(__dirname, '/dist'),
+      filename: 'js/bundle.js'
     },
     module: {
       loaders: [
         {
           test: /\.css$/,
           loader: ExtractTextPlugin.extract(
-                        {fallbackLoader: 'style-loader', loader:'css-loader'})
+                        {fallbackLoader: 'style-loader', loader: 'css-loader'})
         },
         {
           test: /\.(js|jsx)$/,

@@ -9,3 +9,5 @@
 7. Redux - http://redux.js.org
 8. react-router - https://github.com/ReactTraining/react-router
 9. rect-redux - https://github.com/reactjs/react-redux
+10. Jest - https://facebook.github.io/jest/docs/getting-started.html
+11. UglifyJS - https://github.com/mishoo/UglifyJS

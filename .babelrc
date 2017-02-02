@@ -9,11 +9,6 @@
                 "locals": ["module"]
                 }]
             }]]
-        },
-        "test": {
-            "plugins": [
-                ["__coverage__", {"ignore": "*.+(test|stub).*"}]
-            ]
         }
     }
 }
