@@ -14,14 +14,14 @@ module.exports = env => {
     entry: ['./src/index.js'],
     output: {
       path: path.join(__dirname, '/dist'),
-      filename: 'js/bundle.js'
+      filename: 'static/js/bundle.js',
+      publicPath: '/'
     },
     module: {
       loaders: [
         {
           test: /\.css$/,
-          loader: ExtractTextPlugin.extract(
-                        {fallbackLoader: 'style-loader', loader: 'css-loader'})
+          loader: 'style-loader!css-loader'
         },
         {
           test: /\.(js|jsx)$/,
@@ -34,21 +34,26 @@ module.exports = env => {
         },
         {
           test: /\.(jpe?g|png|gif|svg)$/i,
-          loader: 'url-loader?limit=10000&name=public/assets/images/[name].[ext]'
+          loader: 'url-loader?limit=10000&name=static/images/[name].[ext]'
+        },
+        {
+          test: /\.(eot|ttf|woff|woff2)$/,
+          loader: 'file-loader?name=static/fonts/[name].[ext]'
         }
       ]
     },
     plugins: [
       new ProgressBarPlugin(),
-      new ExtractTextPlugin('styles.css'),
+      new ExtractTextPlugin('style.css'),
       new HtmlWebpackPlugin({
         template: './src/index.html'
       }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.DefinePlugin({
-        __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false')),
+        __DEV__: JSON.stringify(env.dev),
+        __DEBUG__: JSON.stringify(env.debug),
         'process.env': {
-          NODE_ENV: ifProd('"production"', '"development"')
+          NODE_ENV: JSON.stringify(ifProd('production', 'development'))
         }
       })
     ],
